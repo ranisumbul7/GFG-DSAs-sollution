@@ -1,19 +1,32 @@
-class Solution {
-    int missingNum(int arr[]) {
-        int xor1 = 0, xor2 = 0;
-        int n = arr.length + 1;
+import java.util.*;
 
-        // XOR all array elements
-        for (int i = 0; i < n - 1; i++) {
-            xor2 ^= arr[i];
+public class MissingElementsFinder {
+    public static List<Integer> findMissingElements(int[] arr, int n) {
+        boolean[] present = new boolean[n + 1]; // index 1 to n
+
+        // Mark the present numbers
+        for (int num : arr) {
+            if (num <= n) {
+                present[num] = true;
+            }
         }
 
-        // XOR all numbers from 1 to n
+        // Find missing numbers
+        List<Integer> missing = new ArrayList<>();
         for (int i = 1; i <= n; i++) {
-            xor1 ^= i;
+            if (!present[i]) {
+                missing.add(i);
+            }
         }
 
-        // Missing number is the XOR of xor1 and xor2
-        return xor1 ^ xor2;
+        return missing;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 4, 6};
+        int n = 6;
+
+        List<Integer> missing = findMissingElements(arr, n);
+        System.out.println("Missing elements: " + missing);
     }
 }
